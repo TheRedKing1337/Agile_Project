@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50152f55d12a0545bf6bdac1870780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
+  moveSpeed: 15
   pathWidth: 3
   sectionsToLoad: 5
 --- !u!4 &102282030
@@ -248,7 +248,7 @@ MonoBehaviour:
   - {fileID: -3541782398405106682, guid: 8823d71d721b0254ab0d1a1e02edbefc, type: 3}
   - {fileID: 6517051633627381774, guid: 0be94921a28887b4c8d3d92a1655d769, type: 3}
   - {fileID: -6961347719210009981, guid: 4cef44052bea4e540bf316e4bdd885e5, type: 3}
-  - {fileID: 7237265613828739261, guid: 4cbcc25acaa3b464dbad0297cff3cd43, type: 3}
+  - {fileID: 998352846149242916, guid: c4881395efa2ffe4986284e8836d0d5b, type: 3}
 --- !u!4 &1411050577
 Transform:
   m_ObjectHideFlags: 0
