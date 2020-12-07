@@ -152,7 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   pathWidth: 3
-  sectionsToLoad: 5
+  sectionsToLoad: 3
+  sectionLength: 30
 --- !u!4 &102282030
 Transform:
   m_ObjectHideFlags: 0
