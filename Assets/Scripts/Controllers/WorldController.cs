@@ -10,7 +10,6 @@ public class WorldController : MonoBehaviour
     public int sectionLength = 10;
 
     private bool[,] obstacles;
-    private float distance;
     private int obstaclePosition;
     private List<Transform> toMove = new List<Transform>();
 
@@ -21,7 +20,7 @@ public class WorldController : MonoBehaviour
 
         for (int i = 0; i < sectionsToLoad; i++)
         {
-            SpawnWorldTest(i * sectionLength * pathWidth);           
+            SpawnWorldTest(i * sectionLength * pathWidth);
         }
 
         StartCoroutine(ArrayPosCounter());
@@ -36,8 +35,8 @@ public class WorldController : MonoBehaviour
             //if any objects active in scene
             for (int i = 0; i < toMove.Count; i++)
             {
-                //if object far enough behind player
-                if (toMove[i].position.z < -sectionLength * pathWidth)
+                //if object far enough behind player, 1 entire section plus 5
+                if (toMove[i].position.z < -sectionLength * pathWidth -5)
                 {
                     WorldObjectPool.Instance.Return(toMove[i].GetComponent<WorldObject>());
                     toMove.RemoveAt(i);
@@ -55,12 +54,8 @@ public class WorldController : MonoBehaviour
         //while player is alive
         while (true)
         {
-            //distance += Time.deltaTime * moveSpeed;
-            //obstaclePosition = Mathf.RoundToInt(distance/ 3 % sectionsToLoad * 10);
-            //Debug.Log(distance + " --- " + obstaclePosition);
-
             //if final object is within the new spawn range
-            if (toMove[toMove.Count - 1].position.z < (sectionsToLoad - 2) * sectionLength * pathWidth)
+            if (toMove[toMove.Count - 1].position.z < (sectionsToLoad - 1) * sectionLength * pathWidth)
             {
                 //spawn new section behind final object
                 SpawnWorldTest(toMove[toMove.Count - 1].position.z);
@@ -85,45 +80,50 @@ public class WorldController : MonoBehaviour
                 obstacles[x, obstaclePosition + y] = false;
             }
         }
-        Debug.Log(obstaclePosition + "-" + (obstaclePosition + sectionLength-1) + "/" + obstacles.GetLength(1));
+        Debug.Log(obstaclePosition + "-" + (obstaclePosition + sectionLength - 1) + "/" + (obstacles.GetLength(1) - 1));
+
+
+        //spawn one floor for entire section, so prefab has to be same length as sectionLength
+        toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.IceFloor).transform);
+        toMove[toMove.Count - 1].position = new Vector3(0, 0, zOffset);
+        toMove[toMove.Count - 1].gameObject.SetActive(true);
 
         for (int z = 0; z < sectionLength; z++)
         {
             //spawn obstacles for each lane
             for (int x = 0; x < obstacles.GetLength(0); x++)
             {
-                //skip first
-                if (z != 0)
+                //1 in x
+                if (Random.Range(0, 8) == 0)
                 {
-                    //1 in x
-                    if (Random.Range(0, 8) == 0)
-                    {
-                        //first check for space in obstacles array
-                        if (obstacles[x, obstaclePosition + z] != false) { Debug.Log("No space for new obstacle"); continue; }
+                    //first check for space in obstacles array
+                    if (obstacles[x, obstaclePosition + z] != false) { Debug.Log("No space for new obstacle"); continue; }
 
-                        int randomIndex = (Random.Range(0, 2) == 0) ? 1 : 3;
-                        Vector3 spawnPos = new Vector3(x * pathWidth - pathWidth, 0, z * pathWidth + zOffset);
-                        WorldObject wo = WorldObjectPool.Instance.Get(randomIndex);
-                        toMove.Add(wo.transform);
-                        wo.transform.position = spawnPos;
-                        wo.gameObject.SetActive(true);
+                    int randomIndex = (Random.Range(0, 2) == 0) ? (int)WorldObjectType.Marketstall : (int)WorldObjectType.Dragon;
+                    Vector3 spawnPos = new Vector3(x * pathWidth - pathWidth, 0, z * pathWidth + zOffset);
+                    WorldObject wo = WorldObjectPool.Instance.Get(randomIndex);
+                    toMove.Add(wo.transform);
+                    wo.transform.position = spawnPos;
+                    wo.gameObject.SetActive(true);
 
-                        //fill obstacles array, in real situation fill positions in front aswell
-                        obstacles[x, obstaclePosition + z] = true;
-                    }
+                    //fill obstacles array, in real situation fill positions in front aswell
+                    obstacles[x, obstaclePosition + z] = true;
                 }
+
             }
-            //spawn floor
-            toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Floor).transform);
-            toMove[toMove.Count - 1].position = new Vector3(0, 0, z * pathWidth + zOffset);
-            toMove[toMove.Count - 1].gameObject.SetActive(true);
+            //spawn floor, maybe only do this once per section to have less objects
+            //toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Floor).transform);
+            //toMove[toMove.Count - 1].position = new Vector3(0, 0, z * pathWidth + zOffset);
+            //toMove[toMove.Count - 1].gameObject.SetActive(true);
             //spawn walls, right
             toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Wall).transform);
             toMove[toMove.Count - 1].position = new Vector3(5.5f, 0, z * pathWidth + zOffset);
+            toMove[toMove.Count - 1].rotation = Quaternion.identity;
             toMove[toMove.Count - 1].gameObject.SetActive(true);
             //and left
             toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Wall).transform);
             toMove[toMove.Count - 1].position = new Vector3(-5.5f, 0, z * pathWidth + zOffset);
+            toMove[toMove.Count - 1].rotation = Quaternion.Euler(0, 180, 0);
             toMove[toMove.Count - 1].gameObject.SetActive(true);
         }
     }
