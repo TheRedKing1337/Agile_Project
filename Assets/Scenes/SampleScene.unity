@@ -154,6 +154,7 @@ MonoBehaviour:
   pathWidth: 3
   sectionsToLoad: 3
   sectionLength: 27
+  distance: 2.22
 --- !u!4 &102282030
 Transform:
   m_ObjectHideFlags: 0
@@ -780,7 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc5bb3ec9bce4649ae0212b11188d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bendX: 0
+  bendX: -0.00301
   bendY: 0
 --- !u!4 &2142537987
 Transform:

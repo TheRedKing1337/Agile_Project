@@ -11,6 +11,7 @@ public class WorldController : MonoBehaviour
 
     private bool[,] obstacles;
     private int obstaclePosition;
+    public float distance;
     private List<Transform> toMove = new List<Transform>();
 
     // Start is called before the first frame update
@@ -47,6 +48,8 @@ public class WorldController : MonoBehaviour
                 }
                 toMove[i].position = new Vector3(toMove[i].position.x, toMove[i].position.y, toMove[i].position.z - Time.deltaTime * moveSpeed);
             }
+            distance += Time.deltaTime * moveSpeed;
+            Shader.SetGlobalFloat("_Distance", distance);
         }
     }
     private IEnumerator ArrayPosCounter()

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_Mat
+  m_Name: StoneTiles_Mat
   m_Shader: {fileID: -6465566751694194690, guid: b9d7e29ee4f4dd747943ff3253b3cc4c,
     type: 3}
   m_ShaderKeywords: 
