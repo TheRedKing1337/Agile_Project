@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Window_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: b9d7e29ee4f4dd747943ff3253b3cc4c,
+  m_Shader: {fileID: -6465566751694194690, guid: 78d59c847d890494c80dfc8809dad79f,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

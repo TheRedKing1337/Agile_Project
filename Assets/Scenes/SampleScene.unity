@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   pathWidth: 3
-  sectionsToLoad: 3
+  sectionsToLoad: 2
   sectionLength: 27
   distance: 2.22
 --- !u!4 &102282030
