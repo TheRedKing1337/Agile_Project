@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 6517051633627381774, guid: 0be94921a28887b4c8d3d92a1655d769, type: 3}
   - {fileID: -6903745641396228756, guid: d6071544420667c4d9897269bf13d9d6, type: 3}
   - {fileID: 998352846149242916, guid: c4881395efa2ffe4986284e8836d0d5b, type: 3}
-  - {fileID: -6961347719210009981, guid: 4cef44052bea4e540bf316e4bdd885e5, type: 3}
+  - {fileID: 3641794306003116344, guid: 4cef44052bea4e540bf316e4bdd885e5, type: 3}
 --- !u!4 &1411050577
 Transform:
   m_ObjectHideFlags: 0
@@ -781,8 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc5bb3ec9bce4649ae0212b11188d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bendX: -0.00301
-  bendY: 0
+  bendXAmplitude: -0.00301
+  bendY: -0.0019
+  bendXFrequency: 0.1
 --- !u!4 &2142537987
 Transform:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldController : MonoBehaviour
+public class WorldManager : MonoBehaviour
 {
     public float moveSpeed = 1;
     public float pathWidth = 3;
@@ -87,7 +87,7 @@ public class WorldController : MonoBehaviour
 
 
         //spawn one floor for entire section, so prefab has to be same length as sectionLength
-        toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.IceFloor).transform);
+        toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Floor).transform);
         toMove[toMove.Count - 1].position = new Vector3(0, 0, zOffset);
         toMove[toMove.Count - 1].gameObject.SetActive(true);
 
