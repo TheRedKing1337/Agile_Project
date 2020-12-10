@@ -5,17 +5,17 @@ using UnityEngine;
 public class WorldBendController : MonoBehaviour
 {
     [Range(-0.01f, 0.01f)]
-    public float bendX;
+    public float bendXAmplitude;
     [Range(-0.01f, 0.01f)]
     public float bendY;
     [Range(0, 0.2f)]
-    public float bendXSize;
+    public float bendXFrequency;
 
     private void UpdateShaderValues()
     {
-        Shader.SetGlobalFloat("_CurveX", bendX);
+        Shader.SetGlobalFloat("_CurveX", bendXAmplitude);
         Shader.SetGlobalFloat("_CurveY", bendY);
-        Shader.SetGlobalFloat("_CurveXSize", bendXSize);
+        Shader.SetGlobalFloat("_CurveXSize", bendXFrequency);
     }
     private void OnValidate()
     {
@@ -24,17 +24,17 @@ public class WorldBendController : MonoBehaviour
     [ContextMenu("Set to zero")]
     private void SetToZero()
     {
-        bendX = 0;
+        bendXAmplitude = 0;
         bendY = 0;
-        bendXSize = 0;
+        bendXFrequency = 0;
         UpdateShaderValues();
     }
     [ContextMenu("Set to default")]
     private void SetToDefault()
     {
-        bendX = -0.00301f;
+        bendXAmplitude = -0.00301f;
         bendY = -0.0019f;
-        bendXSize = 0.1f;
+        bendXFrequency = 0.1f;
         UpdateShaderValues();
     }
 }
