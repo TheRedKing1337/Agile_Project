@@ -61,7 +61,7 @@ public class WorldManager : MonoBehaviour
             if (toMove[toMove.Count - 1].position.z < (sectionsToLoad - 1) * sectionLength * pathWidth)
             {
                 //spawn new section behind final object
-                SpawnWorldTest(toMove[toMove.Count - 1].position.z);
+                SpawnWorldTest(toMove[toMove.Count - 1].position.z+pathWidth);
             }
             yield return null;
         }
@@ -114,10 +114,6 @@ public class WorldManager : MonoBehaviour
                 }
 
             }
-            //spawn floor, maybe only do this once per section to have less objects
-            //toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Floor).transform);
-            //toMove[toMove.Count - 1].position = new Vector3(0, 0, z * pathWidth + zOffset);
-            //toMove[toMove.Count - 1].gameObject.SetActive(true);
             //spawn walls, right
             toMove.Add(WorldObjectPool.Instance.Get((int)WorldObjectType.Wall).transform);
             toMove[toMove.Count - 1].position = new Vector3(5.5f, 0, z * pathWidth + zOffset);
