@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TRKGeneric;
 
-public class WorldManager : MonoBehaviour
+public class WorldManager : MonoSingleton<WorldManager>
 {
+    #region vars
     public float moveSpeed = 1;
     public float pathWidth = 3;
-    public int sectionsToLoad = 3;
-    public int sectionLength = 10;
+    public float distance;
+
+
+    [SerializeField]
+    private int sectionsToLoad = 3;
+    [SerializeField]
+    private int sectionLength = 10;
 
     private bool[,] obstacles;
     private int obstaclePosition;
-    public float distance;
     private List<Transform> toMove = new List<Transform>();
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +30,6 @@ public class WorldManager : MonoBehaviour
         {
             SpawnWorldTest(i * sectionLength * pathWidth);
         }
-
-        StartCoroutine(ArrayPosCounter());
     }
 
     // Update is called once per frame
@@ -33,6 +38,13 @@ public class WorldManager : MonoBehaviour
         //if player is alive
         if (true)
         {
+            //if final object is within the new spawn range
+            if (toMove[toMove.Count - 1].position.z < (sectionsToLoad - 1) * sectionLength * pathWidth)
+            {
+                //spawn new section behind final object
+                SpawnWorldTest(toMove[toMove.Count - 1].position.z + pathWidth);
+            }
+
             //if any objects active in scene
             for (int i = 0; i < toMove.Count; i++)
             {
@@ -50,20 +62,6 @@ public class WorldManager : MonoBehaviour
             }
             distance += Time.deltaTime * moveSpeed;
             Shader.SetGlobalFloat("_Distance", distance);
-        }
-    }
-    private IEnumerator ArrayPosCounter()
-    {
-        //while player is alive
-        while (true)
-        {
-            //if final object is within the new spawn range
-            if (toMove[toMove.Count - 1].position.z < (sectionsToLoad - 1) * sectionLength * pathWidth)
-            {
-                //spawn new section behind final object
-                SpawnWorldTest(toMove[toMove.Count - 1].position.z+pathWidth);
-            }
-            yield return null;
         }
     }
     //all dumb temp code for testing assets and pooling

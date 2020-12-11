@@ -781,9 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc5bb3ec9bce4649ae0212b11188d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bendXAmplitude: -0.00301
-  bendY: -0.0019
-  bendXFrequency: 0.1
+  bendXAmplitude: 0
+  bendY: 0
+  bendXFrequency: 0
 --- !u!4 &2142537987
 Transform:
   m_ObjectHideFlags: 0
