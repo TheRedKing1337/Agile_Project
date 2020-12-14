@@ -20,6 +20,9 @@ public class WorldBendController : MonoBehaviour
     private void OnValidate()
     {
         UpdateShaderValues();
+    } private void Awake()
+    {
+        UpdateShaderValues();
     }
     [ContextMenu("Set to zero")]
     private void SetToZero()
@@ -32,9 +35,9 @@ public class WorldBendController : MonoBehaviour
     [ContextMenu("Set to default")]
     private void SetToDefault()
     {
-        bendXAmplitude = -0.00301f;
+        bendXAmplitude = -0.00201f;
         bendY = -0.0019f;
-        bendXFrequency = 0.1f;
+        bendXFrequency = 0.05f;
         UpdateShaderValues();
     }
 }

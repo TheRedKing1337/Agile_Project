@@ -6,4 +6,4 @@ public class WorldObject : MonoBehaviour
 {
     public WorldObjectType objectType;
 }
-public enum WorldObjectType{ Floor, IceFloor, Marketstall, Wall, Dragon}
+public enum WorldObjectType{ Floor, IceFloor, Marketstall, Wall, Dragon, Debug, SlopingCrates, Bridge, Boat}
