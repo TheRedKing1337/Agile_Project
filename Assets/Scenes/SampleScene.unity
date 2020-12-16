@@ -244,30 +244,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50152f55d12a0545bf6bdac1870780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+  moveSpeed: 40
   pathWidth: 3
   distance: 0
   sectionsToLoad: 2
-  sectionLength: 27
+  sectionLength: 81
   generationSettings:
-    obstacleChance: 75
-    minTurnDistance: 3
-    turnChance: 100
-    minRaiseDistance: 3
-    raiseChance: 0
-  obstaclePrefabs:
-  - name: 7
-    weight: 1
-    isRaised: 0
-    isFullWidth: 1
-    needsSide: 0
-    tiles: 030000000100000003000000030000000100000003000000030000000100000003000000
-  - name: 8
-    weight: 10
-    isRaised: 0
-    isFullWidth: 0
-    needsSide: 0
-    tiles: 030000000300000003000000
+    obstacleChance: 25
+    minTurnDistance: 5
+    turnChance: 50
+    minRaiseDistance: 5
+    raiseChance: 50
+  sectionPrefabs:
+  - prefabs:
+    - name: 7
+      weight: 10
+      isRaised: 0
+      isFullWidth: 1
+      needsSide: 0
+      replacesWalls: 1
+      tiles: 030000000100000003000000030000000100000003000000030000000100000003000000010000000100000001000000
+    - name: 9
+      weight: 1
+      isRaised: 0
+      isFullWidth: 0
+      needsSide: 0
+      replacesWalls: 0
+      tiles: 01000000030000000100000001000000
 --- !u!4 &102282030
 Transform:
   m_ObjectHideFlags: 0
@@ -537,6 +540,8 @@ MonoBehaviour:
   - {fileID: 5675811878792913053, guid: 9fc2556614d47e844aab2fbaa1529d8a, type: 3}
   - {fileID: 3311653380404919815, guid: f1d14de2abd018c40afd4af3f03f11c7, type: 3}
   - {fileID: 7954826636396136245, guid: 02d1679b8a13d014f9d5ad8fe4bd5421, type: 3}
+  - {fileID: 5346437176936050361, guid: c6c527cbddd5bcd42a62bed568f8cd1b, type: 3}
+  - {fileID: 394310848894898310, guid: f04751ab9a4ad0b4f92a165823bb615b, type: 3}
 --- !u!4 &1411050577
 Transform:
   m_ObjectHideFlags: 0
