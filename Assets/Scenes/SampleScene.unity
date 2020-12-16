@@ -250,11 +250,11 @@ MonoBehaviour:
   sectionsToLoad: 2
   sectionLength: 81
   generationSettings:
-    obstacleChance: 25
+    obstacleChance: 10
     minTurnDistance: 5
     turnChance: 50
     minRaiseDistance: 5
-    raiseChance: 50
+    raiseChance: 25
   sectionPrefabs:
   - prefabs:
     - name: 7
@@ -542,6 +542,7 @@ MonoBehaviour:
   - {fileID: 7954826636396136245, guid: 02d1679b8a13d014f9d5ad8fe4bd5421, type: 3}
   - {fileID: 5346437176936050361, guid: c6c527cbddd5bcd42a62bed568f8cd1b, type: 3}
   - {fileID: 394310848894898310, guid: f04751ab9a4ad0b4f92a165823bb615b, type: 3}
+  - {fileID: 2398015373101479190, guid: a6640976924863345a0705613ade194f, type: 3}
 --- !u!4 &1411050577
 Transform:
   m_ObjectHideFlags: 0

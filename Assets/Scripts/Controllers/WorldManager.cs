@@ -259,7 +259,7 @@ public class WorldManager : MonoSingleton<WorldManager>
             {
                 switch (sectionType)
                 {
-                    case 0: index = (int)WorldObjectType.SlopingCrates; break;
+                    case 0: index = (int)WorldObjectType.SlopedDocks; break;
                     case 1: index = (int)WorldObjectType.SlopingCrates; break;
                     case 2: index = (int)WorldObjectType.SlopingCrates; break;
                 }
