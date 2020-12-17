@@ -16,10 +16,12 @@ public class WorldManager : MonoSingleton<WorldManager>
     [SerializeField]
     private int sectionLength = 10;
 
+    //Contains the data of what each tile is and where in the array the active section is
     public enum TileTypes { Empty, Path, RaisedPath, Obstacle, Blocked };
     private TileTypes[,] obstacles;
     private int obstacleOffset;
 
+    //Contains the global settings for worldGen
     [System.Serializable]
     public class GenerationSettings
     {
@@ -28,15 +30,20 @@ public class WorldManager : MonoSingleton<WorldManager>
         public float turnChance = 10;
         public int minRaiseDistance = 3;
         public float raiseChance = 10;
+        public int minLowerDistance = 3;
+        public float lowerChance = 75;
+        public float fillerChance = 50;
     }
     public GenerationSettings generationSettings;
 
+    //Contains the activePath data
     private class Path
     {
         public int currentLane = 1, currentHeight, lastSideSwitch, lastHeightSwitch, oldLane, oldHeight;
     }
     private Path[] paths;
 
+    //The obstacle classes/arrays
     [System.Serializable]
     public class ObstaclePrefab
     {
@@ -55,11 +62,25 @@ public class WorldManager : MonoSingleton<WorldManager>
     }
     public SectionPrefabs[] sectionPrefabs;
 
+    //The filler classes/arrays
+    [System.Serializable]
+    public class FillerPrefab
+    {
+        public WorldObjectType name;
+        public int weight = 1;
+        public TileTypes[] tiles;
+    }
+    [System.Serializable]
+    public class FillerPrefabs
+    {
+        public FillerPrefab[] prefabs;
+    }
+    public FillerPrefabs[] fillerPrefabs;
 
+    //Contains all the objects that have to be moved every tick
     private List<Transform> toMove = new List<Transform>();
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
         paths = new Path[2];
@@ -74,8 +95,6 @@ public class WorldManager : MonoSingleton<WorldManager>
             SpawnSection(i * sectionLength * pathWidth);
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
         //if player is alive
@@ -112,6 +131,7 @@ public class WorldManager : MonoSingleton<WorldManager>
     }
     private void SpawnSection(float zOffset)
     {
+        #region Init vars and prepare obstacles[]
         //walls keeps track of already spawned walls in certain prefabs ex: a bridge shouldnt spawn walls next to it
         bool[] walls = new bool[sectionLength / 3];
 
@@ -133,6 +153,7 @@ public class WorldManager : MonoSingleton<WorldManager>
                 obstacles[x, obstacleOffset + y] = TileTypes.Empty;
             }
         }
+        #endregion
 
         #region Spawn main path/obstacles
         //For each path loop through each Z 
@@ -196,6 +217,10 @@ public class WorldManager : MonoSingleton<WorldManager>
         woT.transform.position = spawnPosT;
         woT.gameObject.SetActive(true);
         #endregion
+
+        #region Fill empty space
+        FillEmpty(sectionType, zOffset);
+        #endregion
     }
     private void SpawnPath(int sectionType, int pathIndex, int z, float zOffset)
     {
@@ -209,10 +234,10 @@ public class WorldManager : MonoSingleton<WorldManager>
             //If next pos in bounds
             if (z + 1 != sectionLength)
             {
-                //If next lane is not empty or if next lane is not 
+                //If next lane is an obstacle, turn
                 if (obstacles[paths[pathIndex].currentLane, obstacleOffset + z + 1] == TileTypes.Obstacle)
                 {
-                    TrySwitch(paths[pathIndex], z);
+                    SwitchLane(paths[pathIndex], z);
                     break;
                 }
             }
@@ -222,68 +247,94 @@ public class WorldManager : MonoSingleton<WorldManager>
                 //If chance
                 if (Random.Range(0, 100f) < generationSettings.turnChance)
                 {
-                    TrySwitch(paths[pathIndex], z);
+                    SwitchLane(paths[pathIndex], z);
                     break;
                 }
             }
             //If hasnt raised too recently and didnt switch
-            if (paths[pathIndex].lastHeightSwitch > generationSettings.minRaiseDistance)
+            if (paths[pathIndex].currentHeight == 0)
             {
-                //If chance
-                if (Random.Range(0, 100f) < generationSettings.raiseChance)
+                if (paths[pathIndex].lastHeightSwitch > generationSettings.minRaiseDistance)
                 {
-                    //Switches the height
-                    SwitchHeight(paths[pathIndex]);
-                    paths[pathIndex].lastHeightSwitch = 0;
-                    break;
-                }
-            }
-        } while (false);
-
-
-        //if currentPos is an obstacle dont spawn anything
-        if (obstacles[paths[pathIndex].currentLane, obstacleOffset + z] != TileTypes.Obstacle)
-        {
-            //Fill current pos as path/raisedPath
-            obstacles[paths[pathIndex].currentLane, obstacleOffset + z] = paths[pathIndex].currentHeight == 0 ? TileTypes.Path : TileTypes.RaisedPath;
-            //Fill old lane as path if has turned
-            if (paths[pathIndex].oldLane != paths[pathIndex].currentLane)
-            {
-                obstacles[paths[pathIndex].oldLane, obstacleOffset + z] = paths[pathIndex].currentHeight == 0 ? TileTypes.Path : TileTypes.RaisedPath;
-            }
-
-            //Spawn actual path objects, 2 if old is different from current
-            //Get the index of the raised path
-            int index = 0;
-            if (paths[pathIndex].oldHeight == 0 && paths[pathIndex].currentHeight == 1)
-            {
-                switch (sectionType)
-                {
-                    case 0: index = (int)WorldObjectType.SlopedDocks; break;
-                    case 1: index = (int)WorldObjectType.SlopingCrates; break;
-                    case 2: index = (int)WorldObjectType.SlopingCrates; break;
+                    //If chance
+                    if (Random.Range(0, 100f) < generationSettings.raiseChance)
+                    {
+                        //Switches the height
+                        SwitchHeight(paths[pathIndex]);
+                        paths[pathIndex].lastHeightSwitch = 0;
+                        break;
+                    }
                 }
             }
             else
             {
-                switch (sectionType)
+                if (paths[pathIndex].lastHeightSwitch > generationSettings.minLowerDistance)
                 {
-                    case 0: index = (int)WorldObjectType.Docks; break;
-                    case 1: index = (int)WorldObjectType.Marketstall; break;
-                    case 2: index = (int)WorldObjectType.Marketstall; break;
+                    //If chance
+                    if (Random.Range(0, 100f) < generationSettings.lowerChance)
+                    {
+                        //Switches the height
+                        SwitchHeight(paths[pathIndex]);
+                        paths[pathIndex].lastHeightSwitch = 0;
+                        break;
+                    }
                 }
             }
-            //Spawn the path if raised
-            if (paths[pathIndex].currentHeight == 1 && obstacles[paths[pathIndex].currentLane, obstacleOffset + z] != TileTypes.Obstacle)
+        } while (false);
+
+        //if currentPos is an obstacle dont spawn anything
+        if (obstacles[paths[pathIndex].currentLane, obstacleOffset + z] != TileTypes.Obstacle)
+        {
+            //Check if is an existing path, if true match values and dont spawn anything
+            if (obstacles[paths[pathIndex].currentLane, obstacleOffset + z] != TileTypes.Empty)
             {
-                SpawnObject(index, paths[pathIndex].currentLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+                //set height to same as other path
+                paths[pathIndex].currentHeight = obstacles[paths[pathIndex].currentLane, obstacleOffset + z] == TileTypes.Path ? 0 : 1;
             }
-            //Spawn object if turned and raised
-            if (paths[pathIndex].currentHeight == 1 && paths[pathIndex].currentLane != paths[pathIndex].oldLane)
+            else
             {
-                SpawnObject(index, paths[pathIndex].oldLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+                //Fill current pos as path/raisedPath
+                obstacles[paths[pathIndex].currentLane, obstacleOffset + z] = paths[pathIndex].currentHeight == 0 ? TileTypes.Path : TileTypes.RaisedPath;
+                //Fill old lane as path if has turned
+                if (paths[pathIndex].oldLane != paths[pathIndex].currentLane)
+                {
+                    obstacles[paths[pathIndex].oldLane, obstacleOffset + z] = paths[pathIndex].currentHeight == 0 ? TileTypes.Path : TileTypes.RaisedPath;
+                }
+
+                //Spawn actual path objects, 2 if old is different from current
+                //Get the index of the raised path
+                int index = 0;
+                if (paths[pathIndex].oldHeight == 0 && paths[pathIndex].currentHeight == 1)
+                {
+                    switch (sectionType)
+                    {
+                        case 0: index = (int)WorldObjectType.SlopedDocks; break;
+                        case 1: index = (int)WorldObjectType.SlopingCrates; break;
+                        case 2: index = (int)WorldObjectType.SlopingCrates; break;
+                    }
+                }
+                else
+                {
+                    switch (sectionType)
+                    {
+                        case 0: index = (int)WorldObjectType.Docks; break;
+                        case 1: index = (int)WorldObjectType.Marketstall; break;
+                        case 2: index = (int)WorldObjectType.Marketstall; break;
+                    }
+                }
+                //Spawn the path if raised
+                if (paths[pathIndex].currentHeight == 1 && obstacles[paths[pathIndex].currentLane, obstacleOffset + z] != TileTypes.Obstacle)
+                {
+                    SpawnObject(index, paths[pathIndex].currentLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+                }
+                //Spawn object if turned and raised
+                if (paths[pathIndex].currentHeight == 1 && paths[pathIndex].currentLane != paths[pathIndex].oldLane)
+                {
+                    SpawnObject(index, paths[pathIndex].oldLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+                }
             }
         }
+
         paths[pathIndex].oldHeight = paths[pathIndex].currentHeight;
         paths[pathIndex].oldLane = paths[pathIndex].currentLane;
     }
@@ -336,9 +387,15 @@ public class WorldManager : MonoSingleton<WorldManager>
                 break;
             }
         }
-        //Spawn the obstacle
-        SpawnObject(actualIndex, paths[pathIndex].currentLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
-
+        //Spawn the obstacle, if fullWidth spawn in middle
+        if (sectionPrefabs[sectionType].prefabs[randomIndex].isFullWidth)
+        {
+            SpawnObject(actualIndex, 0, z * pathWidth + zOffset, 0);
+        }
+        else
+        {
+            SpawnObject(actualIndex, paths[pathIndex].currentLane * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+        }
         //Fill the obstacle arrays with the data from the prefab
         int prefabLength = 0;
         ObstaclePrefab prefab = sectionPrefabs[sectionType].prefabs[randomIndex];
@@ -377,34 +434,42 @@ public class WorldManager : MonoSingleton<WorldManager>
         toMove[toMove.Count - 1].rotation = Quaternion.Euler(0, rotation, 0);
         toMove[toMove.Count - 1].gameObject.SetActive(true);
     }
-    private void TrySwitch(Path path, int zIndex)
+    private void SwitchLane(Path path, int zIndex)
     {
-        //If hasnt turned too recently
-        if (path.lastSideSwitch > generationSettings.minTurnDistance)
+        bool[] availableLanes = new bool[3];
+        //Get the lanes you can turn to
+        switch (path.currentLane)
         {
-            //If chance
-            if (Random.Range(0, 100f) < generationSettings.turnChance)
+            case 0: availableLanes[1] = true; break;
+            case 1: availableLanes[0] = true; availableLanes[2] = true; break;
+            case 2: availableLanes[1] = true; break;
+        }
+        //For each lane test if you can actually turn there
+        for (int i = 0; i < 3; i++)
+        {
+            if (availableLanes[i])
             {
-                //Try turn, 1/3 to still fail
-                path.currentLane = Mathf.Clamp(path.currentLane + (Random.Range(0, 2) == 0 ? -1 : 1), 0, 2);
-                //Fill current pos as path
-                obstacles[path.currentLane, zIndex] = path.currentHeight == 0 ? TileTypes.Path : TileTypes.RaisedPath;
-                path.lastSideSwitch = 0;
-                return;
+                if (obstacles[i, obstacleOffset + zIndex] != TileTypes.Empty)
+                {
+                    availableLanes[i] = false;
+                }
             }
         }
-        ////If hasnt raised too recently
-        //if (path.lastHeightSwitch > generationSettings.minRaiseDistance)
-        //{
-        //    //If chance
-        //    if (UnityEngine.Random.Range(0, 100f) < generationSettings.raiseChance)
-        //    {
-        //        //Switches the height
-        //        SwitchHeight(path);
-        //        path.lastHeightSwitch = 0;
-        //        return;
-        //    }
-        //}
+        //Get one of the available lanes
+        List<int> randomIndexes = new List<int>();
+        for (int i = 0; i < 3; i++)
+        {
+            if (availableLanes[i])
+            {
+                randomIndexes.Add(i);
+            }
+        }
+        if (randomIndexes.Count > 0)
+        {
+            path.currentLane = randomIndexes[Random.Range(0, randomIndexes.Count)];
+            path.lastSideSwitch = 0;
+        }
+        return;
     }
     private bool CanSpawn(int pathIndex, int zIndex, ObstaclePrefab prefab)
     {
@@ -422,18 +487,19 @@ public class WorldManager : MonoSingleton<WorldManager>
         }
         //Checks if obstacle is 3 wide, then if you are on an available offset then if path is currently in the middle lane
         //if wide and not in middle lane return false
-        if (prefab.isFullWidth && paths[pathIndex].currentLane != 1)
-        {
-            Debug.Log("Path was not in middle");
-            return false;
-        }
+        //if (prefab.isFullWidth && paths[pathIndex].currentLane != 1)
+        //{
+        //    Debug.Log("Path was not in middle");
+        //    return false;
+        //}
         //if 3 wide, in middle lane but z isnt a multiple of 3
         if (prefab.isFullWidth && (zIndex % 3 != 0 || zIndex == 0))
         {
             Debug.Log("Path was not divisible by 3");
             return false;
         }
-        if (prefab.isFullWidth && paths[pathIndex].oldHeight == 1)
+        //if wide and is currently raised down spawn
+        if (prefab.isFullWidth && paths[pathIndex].currentHeight == 1)
         {
             Debug.Log("Oldheight was Raised");
             return false;
@@ -447,6 +513,7 @@ public class WorldManager : MonoSingleton<WorldManager>
                 int localX = offset % 3;
                 int localZOffset = Mathf.FloorToInt(offset / 3);
 
+                //If out of bounds
                 if (zIndex + localZOffset > sectionLength - 1)
                 {
                     Debug.Log("Obstacle was out of bounds");
@@ -490,6 +557,24 @@ public class WorldManager : MonoSingleton<WorldManager>
         Debug.LogWarning("Returned false because no condition was met");
         return false;
     }
+    private bool CanSpawnFiller(int x, int z, FillerPrefab prefab)
+    {
+        //foreach tile check if free
+        for (int i = 0; i < prefab.tiles.Length; i++)
+        {
+            //if out of bounds
+            if (z + i > sectionLength - 1)
+            {
+                return false;
+            }
+            //if position is not empty
+            if (obstacles[x, obstacleOffset + z + i] != TileTypes.Empty)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     private void SwitchHeight(Path path)
     {
         if (path.currentHeight == 0)
@@ -499,6 +584,79 @@ public class WorldManager : MonoSingleton<WorldManager>
         else
         {
             path.currentHeight = 0;
+        }
+    }
+    private void FillEmpty(int sectionType, float zOffset)
+    {
+        for (int z = 0; z < sectionLength; z++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                if (generationSettings.fillerChance < Random.Range(0, 100f))
+                {
+                    continue;
+                }
+                //check currentPos, if not empty skip ahead
+                if (obstacles[x, obstacleOffset + z] != TileTypes.Empty)
+                {
+                    continue;
+                }
+                //check which fillers fit
+                bool[] canSpawn = new bool[fillerPrefabs[sectionType].prefabs.Length];
+                for (int i = 0; i < canSpawn.Length; i++)
+                {
+                    canSpawn[i] = CanSpawnFiller(x, z, fillerPrefabs[sectionType].prefabs[i]);
+                }
+                //Select a random filler based on weight
+                //Get the total weight of all spawnable prefabs
+                int totalWeight = 0;
+                for (int i = 0; i < canSpawn.Length; i++)
+                {
+                    if (canSpawn[i])
+                    {
+                        totalWeight += fillerPrefabs[sectionType].prefabs[i].weight;
+                    }
+                }
+                //If 0, then none can spawn so return false
+                if (totalWeight == 0)
+                {
+                    continue;
+                }
+                //Select a prefab based on weight
+                int randomIndex = Random.Range(0, totalWeight);
+                for (int i = 0; i < canSpawn.Length; i++)
+                {
+                    if (canSpawn[i])
+                    {
+                        totalWeight -= fillerPrefabs[sectionType].prefabs[i].weight;
+
+                        if (randomIndex >= totalWeight)
+                        {
+                            randomIndex = i;
+                            break;
+                        }
+                    }
+                }
+                //Gets the actual WorldObjectType index to spawn the obstacle
+                int actualIndex = 0;
+                int[] indexes = System.Enum.GetValues(typeof(WorldObjectType)) as int[];
+                for (int i = 0; i < indexes.Length; i++)
+                {
+                    if ((WorldObjectType)indexes[i] == fillerPrefabs[sectionType].prefabs[randomIndex].name)
+                    {
+                        actualIndex = i;
+                        break;
+                    }
+                }
+                //Fill obstacle array witht the prefab values
+                for (int m = 0; m < fillerPrefabs[sectionType].prefabs[randomIndex].tiles.Length; m++)
+                {
+                    obstacles[x, obstacleOffset + z + m] = fillerPrefabs[sectionType].prefabs[randomIndex].tiles[m];
+                }
+
+                //spawn fillerObject
+                SpawnObject(actualIndex, x * pathWidth - pathWidth, z * pathWidth + zOffset, 0);
+            }
         }
     }
     private void OnDrawGizmos()

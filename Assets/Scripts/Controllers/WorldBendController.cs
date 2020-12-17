@@ -36,8 +36,8 @@ public class WorldBendController : MonoBehaviour
     private void SetToDefault()
     {
         bendXAmplitude = -0.00201f;
-        bendY = -0.0019f;
-        bendXFrequency = 0.05f;
+        bendY = -0.001f;
+        bendXFrequency = 0.03f;
         UpdateShaderValues();
     }
 }

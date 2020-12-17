@@ -244,21 +244,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50152f55d12a0545bf6bdac1870780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 40
+  moveSpeed: 15
   pathWidth: 3
   distance: 0
   sectionsToLoad: 2
   sectionLength: 81
   generationSettings:
     obstacleChance: 10
-    minTurnDistance: 5
+    minTurnDistance: 3
     turnChance: 50
-    minRaiseDistance: 5
+    minRaiseDistance: 10
     raiseChance: 25
+    minLowerDistance: 3
+    lowerChance: 75
+    fillerChance: 25
   sectionPrefabs:
   - prefabs:
     - name: 7
-      weight: 10
+      weight: 100
       isRaised: 0
       isFullWidth: 1
       needsSide: 0
@@ -270,7 +273,15 @@ MonoBehaviour:
       isFullWidth: 0
       needsSide: 0
       replacesWalls: 0
-      tiles: 01000000030000000100000001000000
+      tiles: 030000000100000001000000
+  fillerPrefabs:
+  - prefabs:
+    - name: 9
+      weight: 1
+      tiles: 04000000
+    - name: 8
+      weight: 10
+      tiles: 040000000400000004000000
 --- !u!4 &102282030
 Transform:
   m_ObjectHideFlags: 0
@@ -608,7 +619,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 100
+  far clip plane: 150
   field of view: 60
   orthographic: 0
   orthographic size: 5

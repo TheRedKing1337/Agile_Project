@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4559858452676155497}
   - component: {fileID: 4761995344591638841}
   - component: {fileID: 2975863553934045490}
-  - component: {fileID: 4804624998807936655}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (6)
   m_TagString: Untagged
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4804624998807936655
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448292698705622564}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3351236912878105143
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +90,6 @@ GameObject:
   - component: {fileID: 873096530325266902}
   - component: {fileID: 137572751408635056}
   - component: {fileID: 2370697497748085323}
-  - component: {fileID: 615928133068469090}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (9)
   m_TagString: Untagged
@@ -173,19 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &615928133068469090
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3351236912878105143}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3667179168135234732
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +169,6 @@ GameObject:
   - component: {fileID: 6788512437061079780}
   - component: {fileID: 4408446969550412932}
   - component: {fileID: 2077672487062097554}
-  - component: {fileID: 2600353653297946852}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (2)
   m_TagString: Untagged
@@ -266,19 +237,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2600353653297946852
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3667179168135234732}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4031413795255475599
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +307,6 @@ GameObject:
   - component: {fileID: 7932835829737760253}
   - component: {fileID: 3811006896558169575}
   - component: {fileID: 7487592453267794407}
-  - component: {fileID: 6986311469118628440}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (1)
   m_TagString: Untagged
@@ -418,19 +375,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6986311469118628440
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6209312052825925185}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7265712526139374042
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +386,6 @@ GameObject:
   - component: {fileID: 457797814765604096}
   - component: {fileID: 2549708720770479437}
   - component: {fileID: 4852430898156338326}
-  - component: {fileID: 9041663728043484350}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (3)
   m_TagString: Untagged
@@ -511,19 +454,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9041663728043484350
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7265712526139374042}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7303086546601564527
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +465,6 @@ GameObject:
   - component: {fileID: 8391483542213354682}
   - component: {fileID: 8354015492851238503}
   - component: {fileID: 1974877762362738495}
-  - component: {fileID: 320410510415158398}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (8)
   m_TagString: Untagged
@@ -604,19 +533,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &320410510415158398
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303086546601564527}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7725955766873983712
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +544,6 @@ GameObject:
   - component: {fileID: 1118711052956724760}
   - component: {fileID: 3352001780547488870}
   - component: {fileID: 2636544106907918657}
-  - component: {fileID: 7346537653159457910}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (7)
   m_TagString: Untagged
@@ -697,19 +612,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7346537653159457910
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725955766873983712}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7730291043856955699
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +623,6 @@ GameObject:
   - component: {fileID: 2728002756256428343}
   - component: {fileID: 8644182212835230080}
   - component: {fileID: 174423280741650111}
-  - component: {fileID: 9004575115070026756}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (4)
   m_TagString: Untagged
@@ -790,19 +691,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9004575115070026756
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7730291043856955699}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8603246028196497000
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +702,6 @@ GameObject:
   - component: {fileID: 6349477483131083566}
   - component: {fileID: 1305670355831454312}
   - component: {fileID: 7979399438983296145}
-  - component: {fileID: 4510081668730715873}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone)
   m_TagString: Untagged
@@ -883,19 +770,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4510081668730715873
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8603246028196497000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8907040108756597649
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,7 +781,6 @@ GameObject:
   - component: {fileID: 4997076354576417068}
   - component: {fileID: 2035823043966048559}
   - component: {fileID: 4395596378211302512}
-  - component: {fileID: 7065140421762378056}
   m_Layer: 0
   m_Name: bridge_wall_01(Clone) (5)
   m_TagString: Untagged
@@ -976,19 +849,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7065140421762378056
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8907040108756597649}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.9999995, y: 4.9999995, z: 0.000052769945}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9006587076215543623
 GameObject:
   m_ObjectHideFlags: 0

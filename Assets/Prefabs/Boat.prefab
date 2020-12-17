@@ -360,6 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7954826636396136246}
   - component: {fileID: 7954826636396136245}
+  - component: {fileID: 3108356229987371870}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -395,3 +396,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 8
+--- !u!65 &3108356229987371870
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954826636396136244}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3111181, y: 1.434063, z: 8.063158}
+  m_Center: {x: 0.2514155, y: 0.21703148, z: 4.009363}

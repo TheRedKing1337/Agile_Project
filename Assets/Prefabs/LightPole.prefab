@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7122029966728637771}
   - component: {fileID: 7122029966731537771}
   - component: {fileID: 7122029966730538923}
+  - component: {fileID: 8318307816829880334}
   m_Layer: 0
   m_Name: LightPole
   m_TagString: Untagged
@@ -80,6 +81,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8318307816829880334
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122029966728606059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3253196, y: 3.732988, z: 0.38754812}
+  m_Center: {x: 0, y: 1.8312334, z: 0}
 --- !u!1001 &8759880864619104692
 PrefabInstance:
   m_ObjectHideFlags: 0
