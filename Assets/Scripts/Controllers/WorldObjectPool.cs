@@ -46,6 +46,7 @@ public class WorldObjectPool : MonoSingleton<WorldObjectPool>
     {
         WorldObject wo = Instantiate(prefabs[index], Vector3.zero, prefabs[index].transform.rotation);
         wo.transform.SetParent(transform);
+        wo.gameObject.SetActive(false);
         objects[index].Enqueue(wo);
     }
 }

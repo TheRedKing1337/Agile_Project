@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class MoveLights : MonoBehaviour
 {
+    private Vector3 orignalLocalPos;
     private float originalX;
     private float originalY;
-    private void Start()
+
+    private void Awake()
     {
+        orignalLocalPos = transform.localPosition;
+        originalX = transform.position.x;
+        originalY = transform.position.y;
+    }
+    private void OnEnable()
+    {
+        transform.localPosition = orignalLocalPos;
         originalX = transform.position.x;
         originalY = transform.position.y;
     }
