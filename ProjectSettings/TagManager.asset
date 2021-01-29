@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Debug
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - 
   - LayerMask
   - SeeThrough
-  - 
-  - 
-  - 
+  - Floor
+  - Test
+  - BehindUI
   - 
   - 
   - 

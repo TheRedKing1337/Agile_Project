@@ -5,16 +5,7 @@ using UnityEngine.Rendering;
 
 public class TestScript : MonoBehaviour
 {
-    public RenderPipelineAsset exampleAssetA;
-    public RenderPipelineAsset exampleAssetB;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -30,6 +21,10 @@ public class TestScript : MonoBehaviour
         {
             QualitySettings.SetQualityLevel(0);
             Debug.Log("Quality level is now Low");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            GameObject.Find("LevelManager").GetComponent<LevelManager>().ReloadLevel();
         }
     }
 }
