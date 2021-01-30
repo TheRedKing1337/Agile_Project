@@ -3,20 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TRKGeneric;
-using UnityEngine.UI;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public int coinsCollected = 0;
-    public int coinScore = 0;
     public bool isDead;
-    public float timeMultiplier = 1;
-    public GameObject enemy;
 
+    [SerializeField]
+    private GameObject enemy;
+    [SerializeField]
+    private float timeMultiplier = 1;
+    [SerializeField]
     private float coinMultiplier = 1;
+
+    private int coinScore = 0;
     private bool enemyCloser;
     private GameObject player;
-
     private int minuteCount;
     private float secondsCount;
 
@@ -29,8 +30,8 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (!isDead)
         {
-            UpdateTimerUI();
-            EnemyControl();
+            UpdateTimer();
+            EnemyMovement();
         }
     }
 
@@ -41,12 +42,10 @@ public class GameManager : MonoSingleton<GameManager>
     // Increases the coin amount
     public void ObtainCoin()
     {
-        coinsCollected++;
         coinScore += Mathf.RoundToInt(10 * coinMultiplier);
     }
-    private void UpdateTimerUI()
+    private void UpdateTimer()
     {
-        //set timer UI
         secondsCount += Time.deltaTime;
        
         if (secondsCount >= 60)
@@ -56,7 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    private void EnemyControl()
+    private void EnemyMovement()
     {
         Vector3 desiredPos = player.transform.position;
         if (enemyCloser)
@@ -86,13 +85,16 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private IEnumerator SlowDownTimer()
     {
+        //Slow world down
         WorldManager.Instance.SetSpeed(WorldManager.Instance.moveSpeed / 1.5f);
+
         float timer = 1.8f;
         while(timer > 0)
         {
             yield return null;
             timer -= Time.deltaTime;
         }
+        //Speed world up
         WorldManager.Instance.SetSpeed(WorldManager.Instance.moveSpeed * 1.5f);
     }
 
@@ -108,18 +110,24 @@ public class GameManager : MonoSingleton<GameManager>
         if (isDead == false)
         {
             isDead = true;
+            //Stop world from moving
             WorldManager.Instance.SetSpeed(0);
+            //Stop player controls
             player.GetComponent<PlayerMovement>().StopMovement();
+            //Play player death anim
             player.transform.GetChild(0).GetComponent<Animator>().Play("WolfDeath");
+            //Play UI death anim
             UIManager.Instance.Death();
+            //Set music to game over and play game over sound
             AudioManager.Instance.GameOver();
+            //Play enemy kill anim
             enemy.transform.GetChild(0).gameObject.GetComponent<Animator>().Play("Grab");
+            //Play death sound
             AudioManager.Instance.PlayClip(5);
         }
     }
     public int GetTotalScore()
     {
-        int totalScore = Mathf.RoundToInt(coinScore + secondsCount * timeMultiplier + minuteCount * timeMultiplier * 60);
-        return totalScore;
+        return Mathf.RoundToInt(coinScore + secondsCount * timeMultiplier + minuteCount * timeMultiplier * 60);
     }
 }
